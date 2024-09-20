@@ -153,8 +153,7 @@
                         chart2g.data.labels = response[2];
                         chart2g.data.datasets[0].data = response[3];
                         chart2g.update();
-                        console.log(response[4] + "-" + response[5] + "-" + response[6] + "-" + response[
-                            7]);
+                        console.log(response[4] + "-" + response[5] + "-" + response[6] + "-" + response[7]);
 
                         check_alert(response[4], response[5], response[6], response[7]);
 
