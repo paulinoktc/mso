@@ -46,7 +46,7 @@ class SensoresController extends Controller
         /**SENSOR DE TEMPERATURA -----------------------------------------------------------*/
         $data = Sensors_data::where('sensor_id', 1)->get();
         $pivotx = $data->max('id');
-        $data = $data->where('id', '>=', $pivotx - 70);
+        $data = $data->where('id', '>=', $pivotx - 100);
 
         $max_1 = $data->max('id');
         $max_1 = Sensors_data::find($max_1);
@@ -77,7 +77,7 @@ class SensoresController extends Controller
         /**SENSOR DE HZ -----------------------------------------------------------*/
         $data_2 = Sensors_data::where('sensor_id', 2)->get();
         $pivotx = $data_2->max('id');
-        $data_2 = $data_2->where('id', '>=', $pivotx - 70);
+        $data_2 = $data_2->where('id', '>=', $pivotx - 100);
 
         $max_2 = $data_2->max('id');
         $max_2 = Sensors_data::find($max_2);
