@@ -139,3 +139,34 @@ async function run(data) {
 
 
 
+
+// Flujo completo
+async function runHZ(data) {
+    // Parámetros
+    const windowSize = 5;
+    const numPredictions = 35; // Número de predicciones a realizar
+
+    // Normalizar los datos
+    const {
+        normalizedData,
+        min,
+        max
+    } = normalizeData(data);
+
+    // Crear secuencias
+    const {
+        inputs,
+        labels
+    } = createSequences(normalizedData, windowSize);
+
+    // Crear y entrenar el modelo
+    const model = createModel(windowSize);
+    await trainModel(model, inputs, labels);
+
+    // Predicción de los siguientes 35 valores
+    const lastWindow = normalizedData.slice(-windowSize);
+    const nextValues = await predictNextValues(model, lastWindow, numPredictions, min, max);
+
+    // Devolver los próximos valores predichos
+    return nextValues;
+}

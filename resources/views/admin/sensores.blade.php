@@ -41,16 +41,19 @@
                 <canvas id="chartTemperature"></canvas>
             </div>
             <div class="chart-container">
-                <canvas id="chartVibrate"></canvas>
+                <canvas id="charRNNday"></canvas>
             </div>
         </div>
 
         <div class="row">
+
+
             <div class="chart-container">
-                <canvas id="charRNNday"></canvas>
+                <canvas id="chartVibrate"></canvas>
             </div>
+
             <div class="chart-container">
-                <canvas id="charRNNweek"></canvas>
+                <canvas id="charRNNhz"></canvas>
             </div>
         </div>
 
@@ -69,6 +72,7 @@
             const chart1 = document.getElementById('chartTemperature');
             const chart2 = document.getElementById('chartVibrate');
             const chart3 = document.getElementById('charRNNday');
+            const chart4 = document.getElementById('charRNNhz');
 
             let active = true;
 
@@ -150,6 +154,33 @@
                     }
                 }
             });
+
+
+            var chart4g = new Chart(chart4, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: 'Predicciones(HZ)',
+                        data: [],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    },
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Vibracion Prediction'
+                        }
+                    }
+                }
+            });
+
 
 
             sensor = 1;
@@ -243,12 +274,23 @@
                             // Generar los 70 siguientes tiempos
                             const nextTimes = generateNextTimes(lastTime, 35);
                             // 35 tiempos con 2 repeticiones cada uno
-                            const predictedValues = await run(response_all[3]);
-                            console.log(predictedValues);
+
+                            const predictedValues = await run(response_all[1]);
+                            //tthis is a new test
+
+                            //console.log(predictedValues);
 
                             chart3g.data.labels = nextTimes;
                             chart3g.data.datasets[0].data = predictedValues;
                             chart3g.update();
+
+                            const predictedValuesHZ = await runHZ(response_all[3]);
+                            chart4g.data.labels = nextTimes;
+                            chart4g.data.datasets[0].data = predictedValuesHZ;
+                            chart4g.update();
+
+                            console.log(response_all);
+
 
                         }
                     } catch (error) {
